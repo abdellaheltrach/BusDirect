@@ -3,10 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Document</title>
+    <title>BusDirect</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    
+    <header class="bg-[#7eb1ff] px-8">
+        <div class="max-w-7xl mx-auto">
+            <img src="/logo.png" alt="page logo" class="w-32">
+        </div>
+    </header>
+
+    <main class="p-5 ">
+        <section class="max-w-7xl mx-auto grid grid-cols-8  gap-2" >
+            <div class="bg-[#7eb1ff] p-[14px] rounded-[8px]  col-span-full"> item 1</div>
+            <div class="bg-[#7eb1ff] p-[8px] rounded-[8px] row-span-12 col-span-3"> item 2</div>
+            <div class="bg-[#7eb1ff] p-[8px] rounded-[8px] row-span-12 col-span-5"> item 3</div>
+
+        </section>
+    </main>
+
+
+
+
+
+
+
+    <footer class="bg-[#3f5362] px-8 ">
+        <div class="max-w-7xl mx-auto">
+            <img src="/logo.png" alt="page logo" class="w-32">
+                <p class="text-sm text-white ">
+                Plus qu'un tracet, une experience!
+            </p>
+        </div>    
+    </footer>
+    <script src="/script.js" ></script>
 </body>
 </html>
