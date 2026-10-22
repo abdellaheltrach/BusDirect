@@ -1,7 +1,8 @@
 const addBtn = document.getElementById("addBtn");
+const deleteBtn = document.getElementById("deleteBtn");
 const cardHTML = document.getElementsByClassName("card");
 
-const arrReservedPLaces = [
+const arrPLaces = [
   { id: 1, nom: "" },
   { id: 2, nom: "" },
   { id: 3, nom: "" },
@@ -31,26 +32,29 @@ function fillTheList() {
 
   const supprimerSelector = document.getElementById("supprimerSelector");
 
+  //clear the previous list
   slectedPlaceDropDown.innerHTML = "";
+  supprimerSelector.innerHTML = "<option>-- choisir un passagger --</option>";
 
-  for (let i = 0; i < arrReservedPLaces.length; i++) {
-    if (arrReservedPLaces[i].nom === "") {
+  for (let i = 0; i < arrPLaces.length; i++) {
+    if (arrPLaces[i].nom === "") {
       const option = document.createElement("option");
-      option.textContent = `Seat ${arrReservedPLaces[i].id}`;
-      option.value = arrReservedPLaces[i].id;
+      option.textContent = `Seat ${arrPLaces[i].id}`;
+      option.value = arrPLaces[i].id;
       slectedPlaceDropDown.appendChild(option);
     } else {
       const option = document.createElement("option");
-      option.textContent = `Seat ${arrReservedPLaces[i].id}`;
-      option.value = arrReservedPLaces[i].id;
+      option.textContent = `Seat ${arrPLaces[i].id}`;
+      option.value = arrPLaces[i].id;
       supprimerSelector.appendChild(option);
     }
   }
 }
 
 fillTheList();
-
+//events
 addBtn.addEventListener("click", reservePlace);
+deleteBtn.addEventListener("click", deletePlace);
 
 function reservePlace(e) {
   //id slectedPlace
@@ -94,20 +98,42 @@ function reservePlace(e) {
       `;
 
     //add the user to the list and and reset the select dropdown
-    arrReservedPLaces[parseInt(card.dataset.id - 1)].nom = PassagerName;
+    arrPLaces[parseInt(card.dataset.id - 1)].nom = PassagerName;
     document.getElementById("newPassagerName").value = "";
     fillTheList();
 
     //calculat reserved places
     let count = 0;
-    for (let i = 0; i < arrReservedPLaces.length; i++) {
-      if (arrReservedPLaces[i].nom !== "") {
+    for (let i = 0; i < arrPLaces.length; i++) {
+      if (arrPLaces[i].nom !== "") {
         count++;
       }
     }
 
     updateStats(20, count, count * 80);
   }
+}
+
+function deletePlace(e) {
+  const supprimerSelector = document.getElementById("supprimerSelector");
+
+  const cardHTML = findPlaceById(supprimerSelector.value);
+  if (!cardHTML) {
+    return;
+  }
+
+  cardHTML.classList.remove("bg-[#fee2e2]");
+  cardHTML.classList.add("bg-white");
+
+
+  //format selected place
+
+
+  let formatNumber = parseInt(cardHTML.dataset.id);
+  const placeStrr = formatNumber < 10 ? "0" + formatNumber : formatNumber;
+
+  cardHTML.innerHTML = `                  <span class="text-xl font-bold text-emerald-600">${formatNumber}</span>
+                  <span class="text-[11px] text-slate-400 font-normal mt-0.5">Libre</span>`;
 }
 
 //healper;
