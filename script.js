@@ -1,5 +1,5 @@
 const addBtn = document.getElementById("addBtn");
-const cardsarr = document.getElementsByClassName("card");
+const cardHTML = document.getElementsByClassName("card");
 
 const arrReservedPLaces = [
   { id: 1, nom: "" },
@@ -32,6 +32,7 @@ for (let i = 0; i < arrReservedPLaces.length; i++) {
   if (arrReservedPLaces[i].nom === "") {
     const option = document.createElement("option");
     option.textContent = `Seat ${arrReservedPLaces[i].id}`;
+    option.value = arrReservedPLaces[i].id;
     slectedPlaceDropDown.appendChild(option);
   }
 }
@@ -43,6 +44,36 @@ function reservePlace(e) {
   // id newPassagerName
 
   const PassagerName = document.getElementById("newPassagerName").value;
-  const slectedPlace = document.getElementById("newPassagerName").value;
-  console.log(PassagerName);
+  const slectedPlace = document.getElementById("slectedPlace").value;
+
+  // console.log(PassagerName);
+  // console.log(slectedPlace);
+  // console.log(card);
+
+  const card = findPlaceById(slectedPlace);
+
+  if (card !== null) {
+      // target card
+      card.
+
+
+      card.classList.remove("bg-white");
+
+      card.classList.add("bg-[#fee2e2]");
+
+  }
+
+
+}
+
+//healper;
+
+function findPlaceById(id) {
+  for (let i = 0; i < cardHTML.length; i++) {
+    if (cardHTML[i].dataset.id === id) {
+      return cardHTML[i];
+    }
+  }
+
+  return null;
 }
