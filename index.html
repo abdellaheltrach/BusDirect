@@ -220,6 +220,7 @@
               <label class="text-xs font-semibold text-slate-600">passger Réserver</label>
               <div class="flex flex-wrap gap-2">
                 <select
+                  id="supprimerSelector"
                   class="bg-[#F8FAFC] border border-slate-200 text-slate-700 text-xs rounded-lg p-2.5 flex-1 focus:outline-none focus:ring-1 focus:ring-[#0066FF] cursor-pointer"
                 >
                   <option>-- choisir un passagger --</option>
@@ -254,7 +255,7 @@
                 <path d="m3.173 8.18 11-5a2 2 0 0 1 2.647.993L18.56 8" />
                 <rect x="2" y="8" width="20" height="13" rx="2" />
               </svg>
-              <span>20 Total</span>
+              <span id="total">20 Total</span>
             </p>
             <p class="text-[#008000] flex items-center gap-1.5">
               <svg
@@ -269,7 +270,7 @@
               >
                 <path d="M20 6 9 17l-5-5" />
               </svg>
-              <span>20 Available</span>
+              <span id="Available">20 Available</span>
             </p>
             <p class="text-[#0C1E4A] flex items-center gap-1.5">
               <svg
@@ -285,7 +286,7 @@
                 <path d="M16 7h6v6" />
                 <path d="m22 7-8.5 8.5-5-5L2 17" />
               </svg>
-              <span>Recette: 0 DH</span>
+              <span id="recette">Recette: 0 DH</span>
             </p>
           </div>
 

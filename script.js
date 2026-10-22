@@ -28,7 +28,10 @@ const arrReservedPLaces = [
 
 function fillTheList() {
   const slectedPlaceDropDown = document.getElementById("slectedPlace");
-  slectedPlaceDropDown.innerHTML="";
+
+  const supprimerSelector = document.getElementById("supprimerSelector");
+
+  slectedPlaceDropDown.innerHTML = "";
 
   for (let i = 0; i < arrReservedPLaces.length; i++) {
     if (arrReservedPLaces[i].nom === "") {
@@ -36,6 +39,11 @@ function fillTheList() {
       option.textContent = `Seat ${arrReservedPLaces[i].id}`;
       option.value = arrReservedPLaces[i].id;
       slectedPlaceDropDown.appendChild(option);
+    } else {
+      const option = document.createElement("option");
+      option.textContent = `Seat ${arrReservedPLaces[i].id}`;
+      option.value = arrReservedPLaces[i].id;
+      supprimerSelector.appendChild(option);
     }
   }
 }
@@ -51,17 +59,12 @@ function reservePlace(e) {
   const PassagerName = document.getElementById("newPassagerName").value;
   let slectedPlace = document.getElementById("slectedPlace").value;
 
-
   //empty out
-  if (PassagerName==="")
-  {
-
+  if (PassagerName === "") {
     return;
   }
-    
-    
-    
-    // console.log(PassagerName);
+
+  // console.log(PassagerName);
   // console.log(slectedPlace);
 
   const card = findPlaceById(slectedPlace);
@@ -90,11 +93,20 @@ function reservePlace(e) {
                   </div>
       `;
 
-
-      //add the user to the list and and reset the select dropdown
-    arrReservedPLaces[parseInt(card.dataset.id-1)].nom = PassagerName;
-    document.getElementById("newPassagerName").value="";
+    //add the user to the list and and reset the select dropdown
+    arrReservedPLaces[parseInt(card.dataset.id - 1)].nom = PassagerName;
+    document.getElementById("newPassagerName").value = "";
     fillTheList();
+
+    //calculat reserved places
+    let count = 0;
+    for (let i = 0; i < arrReservedPLaces.length; i++) {
+      if (arrReservedPLaces[i].nom !== "") {
+        count++;
+      }
+    }
+
+    updateStats(20, count, count * 80);
   }
 }
 
@@ -108,4 +120,14 @@ function findPlaceById(id) {
   }
 
   return null;
+}
+
+function updateStats(total, avaible, totalMoney) {
+  const totalHTML = document.getElementById("total");
+  const avaibleHTML = document.getElementById("Available");
+  const moneyHTML = document.getElementById("recette");
+
+  totalHTML.innerText = `${total} Total`;
+  avaibleHTML.innerText = `${avaible} Available`;
+  moneyHTML.innerText = `Recette: ${totalMoney} DH`;
 }
