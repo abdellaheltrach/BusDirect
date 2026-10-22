@@ -130,7 +130,7 @@
                   <option>-- Siège libre --</option>
                 </select>
                 <button
-                 id="add-btn"
+                 id="addBtn"
                   class="bg-[#0066FF] hover:bg-[#0052cc] text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-colors cursor-pointer "
                 >
                   Confirmer
@@ -297,6 +297,7 @@
               <div class="grid grid-cols-9 gap-2 items-center" >
                 <!-- Seat 01 -->
                 <div
+                data-id="1"
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100 flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">01</span>
@@ -304,6 +305,7 @@
                 </div>
                 <!-- Seat 02 -->
                 <div
+                  data-id="2"
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100 flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">02</span>
@@ -313,6 +315,7 @@
                 <div ></div>
                 <!-- Seat 03 -->
                 <div
+                data-id="3"
                   class="card col-span-2 bg-[#FEE2E2] rounded-xl p-2.5 border border-red-200/60 flex flex-col items-center justify-center"
                 >
                   <span class="text-xl font-bold text-red-600">03</span>
@@ -341,6 +344,7 @@
                 </div>
                 <!-- Seat 04  -->
                 <div
+                  data-id="4"
                   class="card col-span-2 bg-[#FEE2E2] rounded-xl p-2.5 border border-red-200/60 flex flex-col items-center justify-center"
                 >
                   <span class="text-xl font-bold text-red-600">04</span>
@@ -364,12 +368,13 @@
                         <circle cx="12" cy="11" r="4" />
                         <circle cx="12" cy="12" r="10" /></svg
                     ></span>
-                    <span class="truncate max-w-[65px] font-medium">Marc D.</span>
+                    <span class="truncate max-w-[65px] font-medium">abdellah</span>
                   </div>
                 </div>
 
                 <!-- Seat 05 -->
                 <div
+                  data-id="5"
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100 flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">05</span>
@@ -377,6 +382,7 @@
                 </div>
                 <!-- Seat 06 -->
                 <div
+                data-id="6"
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">06</span>
@@ -387,6 +393,7 @@
 
                 <!-- Seat 07 -->
                 <div
+                  data-id="7"
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">07</span>
@@ -394,21 +401,24 @@
                 </div>
                 <!-- Seat 08 -->
                 <div
+                  data-id="8"
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">08</span>
                   <span class="text-[11px] text-slate-400 font-normal mt-0.5">Libre</span>
                 </div>
 
-                <!-- Seat 08 -->
+                <!-- Seat 09 -->
                 <div
+                data-id="9"
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">09</span>
                   <span class="text-[11px] text-slate-400 font-normal mt-0.5">Libre</span>
                 </div>
-                <!-- Seat 06 -->
+                <!-- Seat 10 -->
                 <div
+                data-id="10"
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">10</span>
@@ -416,15 +426,17 @@
                 </div>
                 <div ></div>
 
-                <!-- Seat 07 -->
+                <!-- Seat 11 -->
                 <div
+                  data-id="11"
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">11</span>
                   <span class="text-[11px] text-slate-400 font-normal mt-0.5">Libre</span>
                 </div>
-                <!-- Seat 08 -->
+                <!-- Seat 12 -->
                 <div
+                  data-id="12"
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">12</span>
@@ -433,6 +445,7 @@
 
                 <!-- Seat 13 -->
                 <div
+                data-id="13"
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">13</span>
@@ -440,6 +453,7 @@
                 </div>
                 <!-- Seat 14 -->
                 <div
+                data-id="14"
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">14</span>
@@ -450,6 +464,8 @@
 
                 <!-- Seat 15 -->
                 <div
+                  data-id="15"
+
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">15</span>
@@ -457,6 +473,8 @@
                 </div>
                 <!-- Seat 16 -->
                 <div
+                  data-id="16"
+
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">16</span>
@@ -465,6 +483,8 @@
 
                 <!-- Seat 17 -->
                 <div
+                                  data-id="17"
+
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">17</span>
@@ -472,6 +492,8 @@
                 </div>
                 <!-- Seat 18 -->
                 <div
+                                data-id="18"
+
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">18</span>
@@ -482,6 +504,8 @@
 
                 <!-- Seat 19 -->
                 <div
+                                  data-id="19"
+
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">19</span>
@@ -489,6 +513,8 @@
                 </div>
                 <!-- Seat 20 -->
                 <div
+                                data-id="20"
+
                   class="card col-span-2 bg-white rounded-xl p-3 border border-slate-100  flex flex-col items-center justify-center cursor-pointer  transition-all"
                 >
                   <span class="text-xl font-bold text-emerald-600">20</span>

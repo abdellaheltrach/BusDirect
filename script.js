@@ -1,43 +1,48 @@
-const pasangerArr = [
-  { placeId: 1, holderName: null },
-  { placeId: 2, holderName: null },
-  { placeId: 3, holderName: null },
-  { placeId: 4, holderName: null },
-  { placeId: 5, holderName: null },
-  { placeId: 6, holderName: null },
-  { placeId: 7, holderName: null },
-  { placeId: 8, holderName: null },
-  { placeId: 9, holderName: null },
-  { placeId: 10, holderName: null },
-  { placeId: 11, holderName: null },
-  { placeId: 12, holderName: null },
-  { placeId: 13, holderName: null },
-  { placeId: 14, holderName: null },
-  { placeId: 15, holderName: null },
-  { placeId: 16, holderName: null },
-  { placeId: 17, holderName: null },
-  { placeId: 18, holderName: null },
-  { placeId: 19, holderName: null },
-  { placeId: 20, holderName: null },
+const addBtn = document.getElementById("addBtn");
+const cardsarr = document.getElementsByClassName("card");
+
+const arrReservedPLaces = [
+  { id: 1, nom: "" },
+  { id: 2, nom: "" },
+  { id: 3, nom: "" },
+  { id: 4, nom: "" },
+  { id: 5, nom: "" },
+  { id: 6, nom: "" },
+  { id: 7, nom: "" },
+  { id: 8, nom: "" },
+  { id: 9, nom: "" },
+  { id: 10, nom: "" },
+  { id: 11, nom: "" },
+  { id: 12, nom: "" },
+  { id: 13, nom: "" },
+  { id: 14, nom: "" },
+  { id: 15, nom: "" },
+  { id: 16, nom: "" },
+  { id: 17, nom: "" },
+  { id: 18, nom: "" },
+  { id: 19, nom: "" },
+  { id: 20, nom: "" },
 ];
 
-// console.log(pasangerArr)
+// cards[1].dataset.id
 
-//reserve new place:
-const addBtn = document.getElementById("add-btn");
-const newPassagerName = document.getElementById("newPassagerName").value;
-const slectedPlace = document.getElementById("slectedPlace");
+const slectedPlaceDropDown = document.getElementById("slectedPlace");
 
-//fill empty places
-for (let i = 0; i < pasangerArr.length; i++) {
-  if (pasangerArr[i].placeId != null) {
-    let option = new Option(pasangerArr[i].placeId, pasangerArr[i].placeId);
-    slectedPlace.add(option);
+for (let i = 0; i < arrReservedPLaces.length; i++) {
+  if (arrReservedPLaces[i].nom === "") {
+    const option = document.createElement("option");
+    option.textContent = `Seat ${arrReservedPLaces[i].id}`;
+    slectedPlaceDropDown.appendChild(option);
   }
 }
 
 addBtn.addEventListener("click", reservePlace);
 
 function reservePlace(e) {
-  console.log(newPassagerName.value);
+  //id slectedPlace
+  // id newPassagerName
+
+  const PassagerName = document.getElementById("newPassagerName").value;
+  const slectedPlace = document.getElementById("newPassagerName").value;
+  console.log(PassagerName);
 }
