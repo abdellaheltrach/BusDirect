@@ -51,7 +51,17 @@ function reservePlace(e) {
   const PassagerName = document.getElementById("newPassagerName").value;
   let slectedPlace = document.getElementById("slectedPlace").value;
 
-  console.log(PassagerName);
+
+  //empty out
+  if (PassagerName==="")
+  {
+
+    return;
+  }
+    
+    
+    
+    // console.log(PassagerName);
   // console.log(slectedPlace);
 
   const card = findPlaceById(slectedPlace);
