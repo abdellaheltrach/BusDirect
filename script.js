@@ -26,16 +26,21 @@ const arrReservedPLaces = [
 
 // cards[1].dataset.id
 
-const slectedPlaceDropDown = document.getElementById("slectedPlace");
+function fillTheList() {
+  const slectedPlaceDropDown = document.getElementById("slectedPlace");
+  slectedPlaceDropDown.innerHTML="";
 
-for (let i = 0; i < arrReservedPLaces.length; i++) {
-  if (arrReservedPLaces[i].nom === "") {
-    const option = document.createElement("option");
-    option.textContent = `Seat ${arrReservedPLaces[i].id}`;
-    option.value = arrReservedPLaces[i].id;
-    slectedPlaceDropDown.appendChild(option);
+  for (let i = 0; i < arrReservedPLaces.length; i++) {
+    if (arrReservedPLaces[i].nom === "") {
+      const option = document.createElement("option");
+      option.textContent = `Seat ${arrReservedPLaces[i].id}`;
+      option.value = arrReservedPLaces[i].id;
+      slectedPlaceDropDown.appendChild(option);
+    }
   }
 }
+
+fillTheList();
 
 addBtn.addEventListener("click", reservePlace);
 
@@ -44,26 +49,43 @@ function reservePlace(e) {
   // id newPassagerName
 
   const PassagerName = document.getElementById("newPassagerName").value;
-  const slectedPlace = document.getElementById("slectedPlace").value;
+  let slectedPlace = document.getElementById("slectedPlace").value;
 
-  // console.log(PassagerName);
+  console.log(PassagerName);
   // console.log(slectedPlace);
-  // console.log(card);
 
   const card = findPlaceById(slectedPlace);
+  // console.log(card);
 
   if (card !== null) {
-      // target card
-      card.
+    // target card
+
+    card.classList.remove("bg-white");
+    card.classList.add("bg-[#fee2e2]");
+
+    //format numbers under 10 to look like th 01..
+    let placeStrr = "";
+    slectedPlace = parseInt(slectedPlace);
+    if (slectedPlace < 10) {
+      placeStrr = "0" + slectedPlace;
+    } else {
+      placeStrr = slectedPlace;
+    }
+
+    card.innerHTML = `<span class="text-xl font-bold text-red-600">${placeStrr}</span>
+                  <div
+                    class="mt-1 px-2 py-0.5 rounded-md flex items-center gap-1 text-[11px] text-slate-700  border border-red-100"
+                  >
+                    <span class="truncate max-w-[65px] font-medium">${PassagerName}</span>
+                  </div>
+      `;
 
 
-      card.classList.remove("bg-white");
-
-      card.classList.add("bg-[#fee2e2]");
-
+      //add the user to the list and and reset the select dropdown
+    arrReservedPLaces[parseInt(card.dataset.id-1)].nom = PassagerName;
+    document.getElementById("newPassagerName").value="";
+    fillTheList();
   }
-
-
 }
 
 //healper;
