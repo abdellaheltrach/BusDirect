@@ -34,18 +34,27 @@ function fillTheList() {
   const slectedPlaceDropDown = document.getElementById("slectedPlace");
   const supprimerSelector = document.getElementById("supprimerSelector");
   const modifySelector = document.getElementById("modifySelector");
+  const newPlace = document.getElementById("newPlace");
 
   //clear the previous list
   slectedPlaceDropDown.innerHTML = "<option>-- choisir un passagger --</option>";
   supprimerSelector.innerHTML = "<option>-- choisir un passagger --</option>";
-  modimodifySelectorfySelector.innerHTML = "<option>-- choisir un passagger --</option>";
+  modifySelector.innerHTML = "<option>-- choisir un passagger --</option>";
+  newPlace.innerHTML = "<option>-- choisir un passagger --</option>";
 
   for (let i = 0; i < arrPLaces.length; i++) {
     if (arrPLaces[i].nom === "") {
+      //fill dropdown menu for the reservation
       const option = document.createElement("option");
       option.textContent = `Seat ${arrPLaces[i].id}`;
       option.value = arrPLaces[i].id;
       slectedPlaceDropDown.appendChild(option);
+
+      //fill dropdown menu for the reservation
+      const optionChagnePlace = document.createElement("option");
+      optionChagnePlace.textContent = `Seat ${arrPLaces[i].id}`;
+      optionChagnePlace.value = arrPLaces[i].id;
+      newPlace.appendChild(optionChagnePlace);
     } else {
       //fill delete dropdown
       const deleteOption = document.createElement("option");
