@@ -31,7 +31,7 @@ const arrPLaces = [
 
 // cards[1].dataset.id
 
-function fillTheList() {
+function refleshTheList() {
   const slectedPlaceDropDown = document.getElementById("slectedPlace");
   const supprimerSelector = document.getElementById("supprimerSelector");
   const modifySelector = document.getElementById("modifySelector");
@@ -71,7 +71,7 @@ function fillTheList() {
   }
 }
 
-fillTheList();
+refleshTheList();
 //events
 addBtn.addEventListener("click", reservePlace);
 deleteBtn.addEventListener("click", deletePlace);
@@ -121,7 +121,7 @@ function reservePlace(e) {
     //add the user to the list and and reset the select dropdown
     arrPLaces[parseInt(card.dataset.id - 1)].nom = PassagerName;
     document.getElementById("newPassagerName").value = "";
-    fillTheList();
+    refleshTheList();
 
     //calculat reserved places
     let count = 0;
@@ -156,7 +156,7 @@ function deletePlace(e) {
 
   //add the user to the list and and reset the select dropdown
   arrPLaces[parseInt(cardHTML.dataset.id - 1)].nom = "";
-  fillTheList();
+  refleshTheList();
   // console.log(arrPLaces);
 
   //calculat reserved places
@@ -185,7 +185,7 @@ function modifdyPlace() {
     } else {
       let SelectedPLaceForModifying = modifyPassangerSelectorHTML.value;
 
-      const cardHTML = findPlaceById(SelectedPLaceForModifying);
+      const reserveCardHTML = findPlaceById(SelectedPLaceForModifying);
 
       //format numbers under 10 to look like th 01..
       let placeStrr = "";
@@ -196,7 +196,9 @@ function modifdyPlace() {
         placeStrr = SelectedPLaceForModifying;
       }
 
-      cardHTML.innerHTML = `<span class="text-xl font-bold text-red-600">${placeStrr}</span>
+      reserveCardHTML.classList.remove("bg-white");
+      reserveCardHTML.classList.add("bg-[#fee2e2]");
+      reserveCardHTML.innerHTML = `<span class="text-xl font-bold text-red-600">${placeStrr}</span>
                   <div
                     class="mt-1 px-2 py-0.5 rounded-md flex items-center gap-1 text-[11px] text-slate-700  border border-red-100"
                   >
@@ -205,19 +207,66 @@ function modifdyPlace() {
       `;
 
       //modefy name in arr
-          arrPLaces[parseInt(cardHTML.dataset.id) - 1].nom = modifedNomHTML.value;
-          modifedNomHTML.value = "";
-          modifyPassangerSelectorHTML.selectedIndex = 0;
+      arrPLaces[parseInt(reserveCardHTML.dataset.id) - 1].nom = modifedNomHTML.value;
+      modifedNomHTML.value = "";
+      modifyPassangerSelectorHTML.selectedIndex = 0;
 
+      refleshTheList();
     }
-
-
-
-
   } else {
     //need to change the full place to avaible place
 
-    
+    //reserve the new place
+    let SelectedNewPLaceForMoving = modifyNewPlaceHTML.value;
+
+    const cardHTML = findPlaceById(SelectedNewPLaceForMoving);
+    const freeCardHTML = findPlaceById(modifyPassangerSelectorHTML.value);
+
+    //format numbers under 10 to look like th 01..
+    let placeStrr = "";
+    SelectedNewPLaceForMoving = parseInt(SelectedNewPLaceForMoving);
+    if (SelectedNewPLaceForMoving < 10) {
+      placeStrr = "0" + SelectedNewPLaceForMoving;
+    } else {
+      placeStrr = SelectedNewPLaceForMoving;
+    }
+
+    cardHTML.classList.remove("bg-white");
+    cardHTML.classList.add("bg-[#fee2e2]");
+
+    cardHTML.innerHTML = `<span class="text-xl font-bold text-red-600">${placeStrr}</span>
+                  <div
+                    class="mt-1 px-2 py-0.5 rounded-md flex items-center gap-1 text-[11px] text-slate-700  border border-red-100"
+                  >
+                    <span class="truncate max-w-[65px] font-medium">${modifedNomHTML.value}</span>
+                  </div>
+      `;
+
+    //reformat
+
+    let oldPlaceToFree = modifyPassangerSelectorHTML.value;
+    placeStrr = "";
+    oldPlaceToFree = parseInt(oldPlaceToFree);
+    if (oldPlaceToFree < 10) {
+      placeStrr = "0" + oldPlaceToFree;
+    } else {
+      placeStrr = oldPlaceToFree;
+    }
+
+    freeCardHTML.classList.remove("bg-[#fee2e2]");
+    freeCardHTML.classList.add("bg-white");
+
+    freeCardHTML.innerHTML = `<span class="text-xl font-bold text-emerald-600">${placeStrr}</span>
+                  <span class="text-[11px] text-slate-400 font-normal mt-0.5">Libre</span>`;
+
+    arrPLaces[parseInt(cardHTML.dataset.id) - 1].nom = modifedNomHTML.value; //new place reserve it
+    arrPLaces[parseInt(modifyPassangerSelectorHTML.value) - 1].nom = ""; //old place free it
+
+    modifedNomHTML.value = "";
+    modifyPassangerSelectorHTML.selectedIndex = 0;
+    modifyNewPlaceHTML.selectedIndex = 0;
+    refleshTheList();
+    //free the old place
   }
 }
 //healper;
