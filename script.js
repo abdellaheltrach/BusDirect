@@ -1,6 +1,7 @@
+const cardHTML = document.getElementsByClassName("card");
 const addBtn = document.getElementById("addBtn");
 const deleteBtn = document.getElementById("deleteBtn");
-const cardHTML = document.getElementsByClassName("card");
+const ModifierBtn = document.getElementById("Modifier-btn");
 
 const placePrix = 80;
 const totalPlaces = 20;
@@ -34,13 +35,13 @@ function fillTheList() {
   const slectedPlaceDropDown = document.getElementById("slectedPlace");
   const supprimerSelector = document.getElementById("supprimerSelector");
   const modifySelector = document.getElementById("modifySelector");
-  const newPlace = document.getElementById("newPlace");
+  const modifyNewPlace = document.getElementById("newPlace");
 
   //clear the previous list
-  slectedPlaceDropDown.innerHTML = "<option>-- choisir un passagger --</option>";
-  supprimerSelector.innerHTML = "<option>-- choisir un passagger --</option>";
-  modifySelector.innerHTML = "<option>-- choisir un passagger --</option>";
-  newPlace.innerHTML = "<option>-- choisir un passagger --</option>";
+  slectedPlaceDropDown.innerHTML = `<option  value="0">-- choisir un passagger --</option>`;
+  supprimerSelector.innerHTML = `<option  value="0">-- choisir un passagger --</option>`;
+  modifySelector.innerHTML = `<option  value="0">-- choisir un passagger --</option>`;
+  modifyNewPlace.innerHTML = `<option  value="0">-- choisir un passagger --</option>`;
 
   for (let i = 0; i < arrPLaces.length; i++) {
     if (arrPLaces[i].nom === "") {
@@ -54,7 +55,7 @@ function fillTheList() {
       const optionChagnePlace = document.createElement("option");
       optionChagnePlace.textContent = `Seat ${arrPLaces[i].id}`;
       optionChagnePlace.value = arrPLaces[i].id;
-      newPlace.appendChild(optionChagnePlace);
+      modifyNewPlace.appendChild(optionChagnePlace);
     } else {
       //fill delete dropdown
       const deleteOption = document.createElement("option");
@@ -63,9 +64,9 @@ function fillTheList() {
       supprimerSelector.appendChild(deleteOption);
       //create new option for the delete
       const modifyOption = document.createElement("option");
-      modifyOption.textContent = `Seat ${arrPLaces[i].id}`;
+      modifyOption.textContent = `Passager: ${arrPLaces[i].nom} [Seat ${arrPLaces[i].id}]`;
       modifyOption.value = arrPLaces[i].id;
-      modifySelector.appendChild(modifyOption);   
+      modifySelector.appendChild(modifyOption);
     }
   }
 }
@@ -74,6 +75,7 @@ fillTheList();
 //events
 addBtn.addEventListener("click", reservePlace);
 deleteBtn.addEventListener("click", deletePlace);
+ModifierBtn.addEventListener("click", modifdyPlace);
 
 function reservePlace(e) {
   //id slectedPlace
@@ -168,6 +170,56 @@ function deletePlace(e) {
   updateStats(totalPlaces, count, count * placePrix);
 }
 
+function modifdyPlace() {
+  const modifyPassangerSelectorHTML = document.getElementById("modifySelector");
+  const modifyNewPlaceHTML = document.getElementById("newPlace");
+  const modifedNomHTML = document.getElementById("modifedNom");
+  // console.log(modifyPassangerSelectorHTML);
+  // console.log(modifyNewPlaceHTML);
+  // console.log(modifedNomHTML);
+
+  if (modifyNewPlaceHTML.value === "0") {
+    //need to change only the name in the same card
+    if (modifedNomHTML.value === "") {
+      return;
+    } else {
+      let SelectedPLaceForModifying = modifyPassangerSelectorHTML.value;
+
+      const cardHTML = findPlaceById(SelectedPLaceForModifying);
+
+      //format numbers under 10 to look like th 01..
+      let placeStrr = "";
+      SelectedPLaceForModifying = parseInt(SelectedPLaceForModifying);
+      if (SelectedPLaceForModifying < 10) {
+        placeStrr = "0" + SelectedPLaceForModifying;
+      } else {
+        placeStrr = SelectedPLaceForModifying;
+      }
+
+      cardHTML.innerHTML = `<span class="text-xl font-bold text-red-600">${placeStrr}</span>
+                  <div
+                    class="mt-1 px-2 py-0.5 rounded-md flex items-center gap-1 text-[11px] text-slate-700  border border-red-100"
+                  >
+                    <span class="truncate max-w-[65px] font-medium">${modifedNomHTML.value}</span>
+                  </div>
+      `;
+
+      //modefy name in arr
+          arrPLaces[parseInt(cardHTML.dataset.id) - 1].nom = modifedNomHTML.value;
+          modifedNomHTML.value = "";
+          modifyPassangerSelectorHTML.selectedIndex = 0;
+
+    }
+
+
+
+
+  } else {
+    //need to change the full place to avaible place
+
+    
+  }
+}
 //healper;
 
 function findPlaceById(id) {
