@@ -2,6 +2,9 @@ const addBtn = document.getElementById("addBtn");
 const deleteBtn = document.getElementById("deleteBtn");
 const cardHTML = document.getElementsByClassName("card");
 
+const placePrix = 80;
+const totalPlaces = 20;
+
 const arrPLaces = [
   { id: 1, nom: "" },
   { id: 2, nom: "" },
@@ -110,7 +113,7 @@ function reservePlace(e) {
       }
     }
 
-    updateStats(20, count, count * 80);
+    updateStats(totalPlaces, count, count * placePrix);
   }
 }
 
@@ -125,15 +128,28 @@ function deletePlace(e) {
   cardHTML.classList.remove("bg-[#fee2e2]");
   cardHTML.classList.add("bg-white");
 
-
   //format selected place
-
 
   let formatNumber = parseInt(cardHTML.dataset.id);
   const placeStrr = formatNumber < 10 ? "0" + formatNumber : formatNumber;
 
-  cardHTML.innerHTML = `                  <span class="text-xl font-bold text-emerald-600">${formatNumber}</span>
+  cardHTML.innerHTML = `                  <span class="text-xl font-bold text-emerald-600">${placeStrr}</span>
                   <span class="text-[11px] text-slate-400 font-normal mt-0.5">Libre</span>`;
+
+  //add the user to the list and and reset the select dropdown
+  arrPLaces[parseInt(cardHTML.dataset.id - 1)].nom = "";
+  fillTheList();
+  // console.log(arrPLaces);
+
+  //calculat reserved places
+  let count = 0;
+  for (let i = 0; i < arrPLaces.length; i++) {
+    if (arrPLaces[i].nom !== "") {
+      count++;
+    }
+  }
+
+  updateStats(totalPlaces, count, count * placePrix);
 }
 
 //healper;
