@@ -32,12 +32,13 @@ const arrPLaces = [
 
 function fillTheList() {
   const slectedPlaceDropDown = document.getElementById("slectedPlace");
-
   const supprimerSelector = document.getElementById("supprimerSelector");
+  const modifySelector = document.getElementById("modifySelector");
 
   //clear the previous list
-  slectedPlaceDropDown.innerHTML = "";
+  slectedPlaceDropDown.innerHTML = "<option>-- choisir un passagger --</option>";
   supprimerSelector.innerHTML = "<option>-- choisir un passagger --</option>";
+  modimodifySelectorfySelector.innerHTML = "<option>-- choisir un passagger --</option>";
 
   for (let i = 0; i < arrPLaces.length; i++) {
     if (arrPLaces[i].nom === "") {
@@ -46,10 +47,16 @@ function fillTheList() {
       option.value = arrPLaces[i].id;
       slectedPlaceDropDown.appendChild(option);
     } else {
-      const option = document.createElement("option");
-      option.textContent = `Seat ${arrPLaces[i].id}`;
-      option.value = arrPLaces[i].id;
-      supprimerSelector.appendChild(option);
+      //fill delete dropdown
+      const deleteOption = document.createElement("option");
+      deleteOption.textContent = `Seat ${arrPLaces[i].id}`;
+      deleteOption.value = arrPLaces[i].id;
+      supprimerSelector.appendChild(deleteOption);
+      //create new option for the delete
+      const modifyOption = document.createElement("option");
+      modifyOption.textContent = `Seat ${arrPLaces[i].id}`;
+      modifyOption.value = arrPLaces[i].id;
+      modifySelector.appendChild(modifyOption);   
     }
   }
 }
