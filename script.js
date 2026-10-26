@@ -79,7 +79,7 @@ function refleshTheList() {
 addBtn.addEventListener("click", reservePlace);
 deleteBtn.addEventListener("click", deletePlace);
 ModifierBtn.addEventListener("click", modifdyPlace);
-cardsContainer.addEventListener("click", containerActions);
+cardsContainer.addEventListener("click", clickCard);
 
 function reservePlace(e) {
   //id slectedPlace
@@ -281,7 +281,7 @@ function modifdyPlace() {
   }
 }
 
-function containerActions(e) {
+function clickCard(e) {
   // console.log(e.target.closest(".card"))
   const selectedCardHTML = e.target.closest(".card");
   const selectedCardId = selectedCardHTML.dataset.id;
@@ -291,6 +291,7 @@ function containerActions(e) {
     fillReserveForm(selectedCardId);
   } else {
     //reserved place need to fill the modify and delete form
+    fillDeleteAndUpdateForm(selectedCardId);
   }
 }
 //healper;
@@ -364,6 +365,30 @@ function loadFromLocalStorage() {
 
 function fillReserveForm(selectedCardId) {
   let slectedPlace = document.getElementById("slectedPlace");
-  slectedPlace.value =selectedCardId;
+  slectedPlace.value = selectedCardId;
 
+  //empty delete
+
+  let deletePlaceSelector = document.getElementById("modifySelector");
+  deletePlaceSelector.value = 0;
+
+  //emptyupdate
+
+  let modefyPlaceSelector = document.getElementById("supprimerSelector");
+  modefyPlaceSelector.value = 0;
+}
+
+function fillDeleteAndUpdateForm(selectedCardId) {
+  //empty reserve form
+  let slectedPlace = document.getElementById("slectedPlace");
+  slectedPlace.value = 0;
+  //delete
+
+  let deletePlaceSelector = document.getElementById("modifySelector");
+  deletePlaceSelector.value = selectedCardId;
+
+  //update
+
+  let modefyPlaceSelector = document.getElementById("supprimerSelector");
+  modefyPlaceSelector.value = selectedCardId;
 }
