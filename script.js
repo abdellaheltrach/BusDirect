@@ -1,6 +1,6 @@
 const STORAGE_KEY = "arrPLaces";
 
-const cardHTML = document.getElementsByClassName("card");
+const cardsHTML = document.getElementsByClassName("card");
 const addBtn = document.getElementById("addBtn");
 const deleteBtn = document.getElementById("deleteBtn");
 const ModifierBtn = document.getElementById("Modifier-btn");
@@ -8,6 +8,7 @@ const cardsContainer = document.getElementById("cardContainer");
 
 const placePrix = 80;
 const totalPlaces = 20;
+let dragedPlace = null;
 
 const arrPLaces = [
   { id: 1, nom: "" },
@@ -34,6 +35,7 @@ const arrPLaces = [
 
 // cards[1].dataset.id
 loadFromLocalStorage();
+addDragableToCards();
 
 function refleshTheList() {
   const slectedPlaceDropDown = document.getElementById("slectedPlace");
@@ -297,9 +299,9 @@ function clickCard(e) {
 //healper;
 
 function findPlaceById(id) {
-  for (let i = 0; i < cardHTML.length; i++) {
-    if (cardHTML[i].dataset.id === id) {
-      return cardHTML[i];
+  for (let i = 0; i < cardsHTML.length; i++) {
+    if (cardsHTML[i].dataset.id === id) {
+      return cardsHTML[i];
     }
   }
 
@@ -391,4 +393,89 @@ function fillDeleteAndUpdateForm(selectedCardId) {
 
   let modefyPlaceSelector = document.getElementById("supprimerSelector");
   modefyPlaceSelector.value = selectedCardId;
+}
+
+function addDragableToCards() {
+  for (let i = 0; i < cardsHTML.length; i++) {
+    cardsHTML[i].draggable = true;
+    cardsHTML[i].addEventListener("dragstart", () => {
+      dragedPlace = cardsHTML[i];
+    });
+
+    cardsHTML[i].addEventListener("dragover", (e) => e.preventDefault());
+    cardsHTML[i].addEventListener("drop", handleDropInCards);
+  }
+}
+
+
+function handleDropInCards(e) {
+  e.preventDefault();
+
+  //back if the drop place is the same drag place or null
+  let dropPlaceHTML = e.target.closest(".card");
+  if (!dropPlaceHTML || dropPlaceHTML === dragedPlace) return;
+
+  let dropIndex = parseInt(dropPlaceHTML.dataset.id) - 1;
+  let dragIndex = parseInt(dragedPlace.dataset.id) - 1;
+
+  let dropNom = arrPLaces[dropIndex].nom;
+  let dragNom = arrPLaces[dragIndex].nom;
+
+  // back if drag and drop both free
+  if (dropNom === "" && dragNom === "") {
+    return;
+  }
+
+  // swap names if both reserved
+  if (dropNom !== "" && dragNom !== "") {
+    let temp = arrPLaces[dragIndex].nom;
+    arrPLaces[dragIndex].nom = arrPLaces[dropIndex].nom;
+    arrPLaces[dropIndex].nom = temp;
+  }
+  // move reservation to other free place
+  else {
+    if (dragNom !== "") {
+      arrPLaces[dropIndex].nom = dragNom;
+      arrPLaces[dragIndex].nom = "";
+    } else {
+      arrPLaces[dragIndex].nom = dropNom;
+      arrPLaces[dropIndex].nom = "";
+    }
+  }
+
+  // Update UI for both cards involved
+  const cardsList = [dragedPlace, dropPlaceHTML];
+  for (let card of cardsList) {
+    let cardId = parseInt(card.dataset.id);
+    let placeNom = arrPLaces[cardId - 1].nom;
+    let placeStrr = cardId < 10 ? "0" + cardId : cardId;
+
+    if (placeNom !== "") {
+      card.classList.remove("bg-white");
+      card.classList.add("bg-[#fee2e2]");
+      card.innerHTML = `<span class="text-xl font-bold text-red-600">${placeStrr}</span>
+              <div
+                class="mt-1 px-2 py-0.5 rounded-md flex items-center gap-1 text-[11px] text-slate-700  border border-red-100"
+              >
+                <span class="truncate max-w-[65px] font-medium">${placeNom}</span>
+              </div>`;
+    } else {
+      card.classList.remove("bg-[#fee2e2]");
+      card.classList.add("bg-white");
+      card.innerHTML = `<span class="text-xl font-bold text-emerald-600">${placeStrr}</span>
+              <span class="text-[11px] text-slate-400 font-normal mt-0.5">Libre</span>`;
+    }
+  }
+
+  // refrresh storage list and stats
+  saveToLocalStorage();
+  refleshTheList();
+
+  let count = 0;
+  for (let i = 0; i < arrPLaces.length; i++) {
+    if (arrPLaces[i].nom !== "") {
+      count++;
+    }
+  }
+  updateStats(totalPlaces, count, count * placePrix);
 }
