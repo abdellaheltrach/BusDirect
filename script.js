@@ -4,6 +4,7 @@ const cardHTML = document.getElementsByClassName("card");
 const addBtn = document.getElementById("addBtn");
 const deleteBtn = document.getElementById("deleteBtn");
 const ModifierBtn = document.getElementById("Modifier-btn");
+const cardsContainer = document.getElementById("cardContainer");
 
 const placePrix = 80;
 const totalPlaces = 20;
@@ -39,7 +40,7 @@ function refleshTheList() {
   const supprimerSelector = document.getElementById("supprimerSelector");
   const modifySelector = document.getElementById("modifySelector");
   const modifyNewPlace = document.getElementById("newPlace");
-  
+
   //clear the previous list
   slectedPlaceDropDown.innerHTML = `<option  value="0">-- choisir un passagger --</option>`;
   supprimerSelector.innerHTML = `<option  value="0">-- choisir un passagger --</option>`;
@@ -53,7 +54,7 @@ function refleshTheList() {
       option.textContent = `Seat ${arrPLaces[i].id}`;
       option.value = arrPLaces[i].id;
       slectedPlaceDropDown.appendChild(option);
-      
+
       //fill dropdown menu for the reservation
       const optionChagnePlace = document.createElement("option");
       optionChagnePlace.textContent = `Seat ${arrPLaces[i].id}`;
@@ -78,14 +79,15 @@ function refleshTheList() {
 addBtn.addEventListener("click", reservePlace);
 deleteBtn.addEventListener("click", deletePlace);
 ModifierBtn.addEventListener("click", modifdyPlace);
+cardsContainer.addEventListener("click", containerActions);
 
 function reservePlace(e) {
   //id slectedPlace
   // id newPassagerName
-  
+
   const PassagerName = document.getElementById("newPassagerName").value;
   let slectedPlace = document.getElementById("slectedPlace").value;
-  
+
   //empty out
   if (PassagerName === "") {
     return;
@@ -93,16 +95,16 @@ function reservePlace(e) {
 
   // console.log(PassagerName);
   // console.log(slectedPlace);
-  
+
   const card = findPlaceById(slectedPlace);
   // console.log(card);
-  
+
   if (card !== null) {
     // target card
-    
+
     card.classList.remove("bg-white");
     card.classList.add("bg-[#fee2e2]");
-    
+
     //format numbers under 10 to look like th 01..
     let placeStrr = "";
     slectedPlace = parseInt(slectedPlace);
@@ -111,7 +113,7 @@ function reservePlace(e) {
     } else {
       placeStrr = slectedPlace;
     }
-    
+
     card.innerHTML = `<span class="text-xl font-bold text-red-600">${placeStrr}</span>
                   <div
                   class="mt-1 px-2 py-0.5 rounded-md flex items-center gap-1 text-[11px] text-slate-700  border border-red-100"
@@ -119,10 +121,10 @@ function reservePlace(e) {
                   <span class="truncate max-w-[65px] font-medium">${PassagerName}</span>
                   </div>
                   `;
-                  
-                  //add the user to the list and and reset the select dropdown
-                  arrPLaces[parseInt(card.dataset.id - 1)].nom = PassagerName;
-                  document.getElementById("newPassagerName").value = "";
+
+    //add the user to the list and and reset the select dropdown
+    arrPLaces[parseInt(card.dataset.id - 1)].nom = PassagerName;
+    document.getElementById("newPassagerName").value = "";
 
     saveToLocalStorage();
     refleshTheList();
@@ -134,37 +136,37 @@ function reservePlace(e) {
         count++;
       }
     }
-    
+
     updateStats(totalPlaces, count, count * placePrix);
   }
 }
 
 function deletePlace(e) {
   const supprimerSelector = document.getElementById("supprimerSelector");
-  
+
   const cardHTML = findPlaceById(supprimerSelector.value);
   if (!cardHTML) {
     return;
   }
-  
+
   cardHTML.classList.remove("bg-[#fee2e2]");
   cardHTML.classList.add("bg-white");
-  
+
   //format selected place
-  
+
   let formatNumber = parseInt(cardHTML.dataset.id);
   const placeStrr = formatNumber < 10 ? "0" + formatNumber : formatNumber;
-  
+
   cardHTML.innerHTML = `                  <span class="text-xl font-bold text-emerald-600">${placeStrr}</span>
   <span class="text-[11px] text-slate-400 font-normal mt-0.5">Libre</span>`;
-  
+
   //add the user to the list and and reset the select dropdown
   arrPLaces[parseInt(cardHTML.dataset.id - 1)].nom = "";
-  
+
   saveToLocalStorage();
   refleshTheList();
   // console.log(arrPLaces);
-  
+
   //calculat reserved places
   let count = 0;
   for (let i = 0; i < arrPLaces.length; i++) {
@@ -183,16 +185,16 @@ function modifdyPlace() {
   // console.log(modifyPassangerSelectorHTML);
   // console.log(modifyNewPlaceHTML);
   // console.log(modifedNomHTML);
-  
+
   if (modifyNewPlaceHTML.value === "0") {
     //need to change only the name in the same card
     if (modifedNomHTML.value === "") {
       return;
     } else {
       let SelectedPLaceForModifying = modifyPassangerSelectorHTML.value;
-      
+
       const reserveCardHTML = findPlaceById(SelectedPLaceForModifying);
-      
+
       //format numbers under 10 to look like th 01..
       let placeStrr = "";
       SelectedPLaceForModifying = parseInt(SelectedPLaceForModifying);
@@ -201,7 +203,7 @@ function modifdyPlace() {
       } else {
         placeStrr = SelectedPLaceForModifying;
       }
-      
+
       reserveCardHTML.classList.remove("bg-white");
       reserveCardHTML.classList.add("bg-[#fee2e2]");
       reserveCardHTML.innerHTML = `<span class="text-xl font-bold text-red-600">${placeStrr}</span>
@@ -211,24 +213,24 @@ function modifdyPlace() {
       <span class="truncate max-w-[65px] font-medium">${modifedNomHTML.value}</span>
       </div>
       `;
-      
+
       //modefy name in arr
       arrPLaces[parseInt(reserveCardHTML.dataset.id) - 1].nom = modifedNomHTML.value;
       modifedNomHTML.value = "";
       modifyPassangerSelectorHTML.selectedIndex = 0;
-      
+
       saveToLocalStorage();
       refleshTheList();
     }
   } else {
     //need to change the full place to avaible place
-    
+
     //reserve the new place
     let SelectedNewPLaceForMoving = modifyNewPlaceHTML.value;
-    
+
     const cardHTML = findPlaceById(SelectedNewPLaceForMoving);
     const freeCardHTML = findPlaceById(modifyPassangerSelectorHTML.value);
-    
+
     //format numbers under 10 to look like th 01..
     let placeStrr = "";
     SelectedNewPLaceForMoving = parseInt(SelectedNewPLaceForMoving);
@@ -237,10 +239,10 @@ function modifdyPlace() {
     } else {
       placeStrr = SelectedNewPLaceForMoving;
     }
-    
+
     cardHTML.classList.remove("bg-white");
     cardHTML.classList.add("bg-[#fee2e2]");
-    
+
     cardHTML.innerHTML = `<span class="text-xl font-bold text-red-600">${placeStrr}</span>
     <div
     class="mt-1 px-2 py-0.5 rounded-md flex items-center gap-1 text-[11px] text-slate-700  border border-red-100"
@@ -248,9 +250,9 @@ function modifdyPlace() {
     <span class="truncate max-w-[65px] font-medium">${modifedNomHTML.value}</span>
     </div>
     `;
-    
+
     //reformat
-    
+
     let oldPlaceToFree = modifyPassangerSelectorHTML.value;
     placeStrr = "";
     oldPlaceToFree = parseInt(oldPlaceToFree);
@@ -259,23 +261,36 @@ function modifdyPlace() {
     } else {
       placeStrr = oldPlaceToFree;
     }
-    
+
     freeCardHTML.classList.remove("bg-[#fee2e2]");
     freeCardHTML.classList.add("bg-white");
-    
+
     freeCardHTML.innerHTML = `<span class="text-xl font-bold text-emerald-600">${placeStrr}</span>
     <span class="text-[11px] text-slate-400 font-normal mt-0.5">Libre</span>`;
 
     arrPLaces[parseInt(cardHTML.dataset.id) - 1].nom = modifedNomHTML.value; //new place reserve it
     arrPLaces[parseInt(modifyPassangerSelectorHTML.value) - 1].nom = ""; //old place free it
-    
+
     modifedNomHTML.value = "";
     modifyPassangerSelectorHTML.selectedIndex = 0;
     modifyNewPlaceHTML.selectedIndex = 0;
-    
+
     saveToLocalStorage();
     refleshTheList();
     //free the old place
+  }
+}
+
+function containerActions(e) {
+  // console.log(e.target.closest(".card"))
+  const selectedCardHTML = e.target.closest(".card");
+  const selectedCardId = selectedCardHTML.dataset.id;
+  // console.log(arrPLaces[selectedCardId - 1]);
+  if (arrPLaces[selectedCardId - 1].nom === "") {
+    //not reserved need to fill the reseve form
+    fillReserveForm(selectedCardId);
+  } else {
+    //reserved place need to fill the modify and delete form
   }
 }
 //healper;
@@ -294,12 +309,11 @@ function updateStats(total, avaible, totalMoney) {
   const totalHTML = document.getElementById("total");
   const avaibleHTML = document.getElementById("Available");
   const moneyHTML = document.getElementById("recette");
-  
+
   totalHTML.innerText = `${total} Total`;
   avaibleHTML.innerText = `${avaible} Available`;
   moneyHTML.innerText = `Recette: ${totalMoney} DH`;
 }
-
 
 function saveToLocalStorage() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(arrPLaces));
@@ -346,4 +360,10 @@ function loadFromLocalStorage() {
     }
   }
   updateStats(totalPlaces, count, count * placePrix);
+}
+
+function fillReserveForm(selectedCardId) {
+  let slectedPlace = document.getElementById("slectedPlace");
+  slectedPlace.value =selectedCardId;
+
 }
