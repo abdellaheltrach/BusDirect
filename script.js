@@ -89,6 +89,10 @@ function reservePlace(e) {
   const PassagerName = document.getElementById("newPassagerName").value;
   let slectedPlace = document.getElementById("slectedPlace").value;
 
+  if (slectedPlace==="0") {
+    slectedPlace=findFirstEmptyPlace();
+  }
+
   if (isNameDuplicate(PassagerName)) {
     showReserveErorrMessage(); 
     return;
@@ -523,4 +527,15 @@ function isNameDuplicate(name) {
   }
 
   return false;
+}
+
+function findFirstEmptyPlace()
+{
+  for (const place of arrPLaces) {
+    if (place.nom==="") {
+      return String(place.id);
+    }
+    
+  }
+  
 }
