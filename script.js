@@ -33,7 +33,6 @@ const arrPLaces = [
   { id: 20, nom: "" },
 ];
 
-// cards[1].dataset.id
 loadFromLocalStorage();
 addDragableToCards();
 
@@ -90,10 +89,14 @@ function reservePlace(e) {
   const PassagerName = document.getElementById("newPassagerName").value;
   let slectedPlace = document.getElementById("slectedPlace").value;
 
-  //empty out
-  if (PassagerName === "") {
+  if (isNameDuplicate(PassagerName)) {
+    showReserveErorrMessage(); 
     return;
   }
+    if (PassagerName === "") {
+      //empty out
+      return;
+    }
 
   // console.log(PassagerName);
   // console.log(slectedPlace);
@@ -230,7 +233,7 @@ function modifdyPlace() {
     //need to change the full place to avaible place
 
     if (modifedNomHTML.value === "") {
-      return;
+      modifedNomHTML.value = arrPLaces[parseInt(modifyPassangerSelectorHTML.value) - 1].nom;
     }
 
     //reserve the new place
@@ -485,8 +488,14 @@ function handleDropInCards(e) {
   updateStats(totalPlaces, count, count * placePrix);
 }
 
-function showReserveMessage() {
+function showReserveMessage()
+{
   const msg = document.getElementById("reserveMessage");
+  msg.classList.remove("hidden");
+  setTimeout(() => msg.classList.add("hidden"), 3000);
+}
+function showReserveErorrMessage() {
+  const msg = document.getElementById("reserveErorrMessage");
   msg.classList.remove("hidden");
   setTimeout(() => msg.classList.add("hidden"), 3000);
 }
@@ -497,9 +506,21 @@ function showUpdateMessage() {
   setTimeout(() => msg.classList.add("hidden"), 3000);
 }
 
-
 function showdeleteMessage() {
   const msg = document.getElementById("deleteMessage");
   msg.classList.remove("hidden");
   setTimeout(() => msg.classList.add("hidden"), 3000);
+}
+function isNameDuplicate(name) {
+  if (!name || name.trim() === "") return false;
+
+  const formattedName = name.trim().toLowerCase();
+
+  for (let i = 0; i < arrPLaces.length; i++) {
+    if (arrPLaces[i].nom.trim().toLowerCase() === formattedName) {
+      return true;
+    }
+  }
+
+  return false;
 }
