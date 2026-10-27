@@ -4,7 +4,7 @@ Bienvenue sur le dépôt du projet **BusDirect**. Cette application web permet d
 
 ## Démo en ligne & Gestion de projet
 
-- **Voir le site en ligne :** [[Lien Vercel](https://bussdirect-6jf4.vercel.app)]
+- **Voir le site en ligne :** [[Lien Vercel](https://busdirect-nine.vercel.app/)]
 - **Voir la planification :** [[Lien vers le tableau de suivi](https://trello.com/b/WsYwcFhl/busdirect)]
 
 ## Sommaire
