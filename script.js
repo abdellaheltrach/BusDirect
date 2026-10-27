@@ -140,6 +140,7 @@ function reservePlace(e) {
     }
 
     updateStats(totalPlaces, count, count * placePrix);
+    showReserveMessage();
   }
 }
 
@@ -178,6 +179,7 @@ function deletePlace(e) {
   }
 
   updateStats(totalPlaces, count, count * placePrix);
+  showdeleteMessage();
 }
 
 function modifdyPlace() {
@@ -220,12 +222,16 @@ function modifdyPlace() {
       arrPLaces[parseInt(reserveCardHTML.dataset.id) - 1].nom = modifedNomHTML.value;
       modifedNomHTML.value = "";
       modifyPassangerSelectorHTML.selectedIndex = 0;
-
+      showUpdateMessage();
       saveToLocalStorage();
       refleshTheList();
     }
   } else {
     //need to change the full place to avaible place
+
+    if (modifedNomHTML.value === "") {
+      return;
+    }
 
     //reserve the new place
     let SelectedNewPLaceForMoving = modifyNewPlaceHTML.value;
@@ -279,7 +285,7 @@ function modifdyPlace() {
 
     saveToLocalStorage();
     refleshTheList();
-    //free the old place
+    showUpdateMessage();
   }
 }
 
@@ -407,7 +413,6 @@ function addDragableToCards() {
   }
 }
 
-
 function handleDropInCards(e) {
   e.preventDefault();
 
@@ -478,4 +483,23 @@ function handleDropInCards(e) {
     }
   }
   updateStats(totalPlaces, count, count * placePrix);
+}
+
+function showReserveMessage() {
+  const msg = document.getElementById("reserveMessage");
+  msg.classList.remove("hidden");
+  setTimeout(() => msg.classList.add("hidden"), 3000);
+}
+
+function showUpdateMessage() {
+  const msg = document.getElementById("updateMessage");
+  msg.classList.remove("hidden");
+  setTimeout(() => msg.classList.add("hidden"), 3000);
+}
+
+
+function showdeleteMessage() {
+  const msg = document.getElementById("deleteMessage");
+  msg.classList.remove("hidden");
+  setTimeout(() => msg.classList.add("hidden"), 3000);
 }
